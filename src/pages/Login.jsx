@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -44,6 +44,7 @@ export default function Login() {
         <input placeholder="Contraseña" type="password" value={pass} onChange={e => setPass(e.target.value)} />
         {error && <p className="error">{error}</p>}
         <button type="submit">Entrar</button>
+        <Link to="/register" className="auth-link">¿No tenés cuenta? <span>Crear cuenta</span></Link>
       </form>
     </div>
   );
