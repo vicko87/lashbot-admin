@@ -5,7 +5,9 @@ import Clients from "./pages/Clients";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import Register from "./pages/Register";
-
+import WhatsApp from "./pages/WhatsApp";
+import Dashboard from "./pages/Dashboard";
+import Appointments from "./pages/Appointments";
 
 
 
@@ -23,6 +25,9 @@ export default function App() {
           <PrivateRoute><Navbar /><Clients /></PrivateRoute>}
            />
            <Route path="*" element={<Navigate to="/availability" />} />
+           <Route path="/whatsapp" element={<PrivateRoute><Navbar /><WhatsApp /></PrivateRoute>} />
+            <Route path="/dashboard" element={<PrivateRoute><Navbar /><Dashboard /></PrivateRoute>} />
+            <Route path="/appointments" element={<PrivateRoute><Navbar /><Appointments /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );

@@ -15,6 +15,9 @@ export default function Navbar() {
             <div className="navbar-links">
                 <Link to="/availability">Disponibilidad</Link>
                 <Link to="/clients">Clientes</Link>
+                <Link to="/whatsapp">WhatsApp</Link>
+                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/appointments">Citas</Link>
                 <button onClick={logout}>Cerrar sesión</button>
             </div>
         </nav>
