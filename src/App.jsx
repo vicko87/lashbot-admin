@@ -8,6 +8,8 @@ import Register from "./pages/Register";
 import WhatsApp from "./pages/WhatsApp";
 import Dashboard from "./pages/Dashboard";
 import Appointments from "./pages/Appointments";
+import AISettings from "./pages/AISettings";
+import Services from "./pages/Services";
 
 
 
@@ -28,6 +30,8 @@ export default function App() {
            <Route path="/whatsapp" element={<PrivateRoute><Navbar /><WhatsApp /></PrivateRoute>} />
             <Route path="/dashboard" element={<PrivateRoute><Navbar /><Dashboard /></PrivateRoute>} />
             <Route path="/appointments" element={<PrivateRoute><Navbar /><Appointments /></PrivateRoute>} />
+            <Route path="/ai-settings" element={<PrivateRoute><Navbar /><AISettings /></PrivateRoute>} />
+             <Route path="/services" element={<PrivateRoute><Navbar /><Services /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );

@@ -18,6 +18,8 @@ export default function Navbar() {
                 <Link to="/whatsapp">WhatsApp</Link>
                 <Link to="/dashboard">Dashboard</Link>
                 <Link to="/appointments">Citas</Link>
+                <Link to="/ai-settings">Configuración IA</Link>
+                <Link to="/services">Servicios</Link>
                 <button onClick={logout}>Cerrar sesión</button>
             </div>
         </nav>
