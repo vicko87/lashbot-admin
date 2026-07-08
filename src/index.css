@@ -427,3 +427,57 @@ body {
 .badge.confirmada { background: #22c55e; }
 .badge.pendiente  { background: #f59e0b; }
 .badge.cancelada  { background: #ef4444; }
+
+
+/* ── FORMULARIO CONFIGURACIÓN IA ── */
+.page label {
+  display: block;
+  margin-top: 1.2rem;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.page textarea {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  padding: 0.75rem 1rem;
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  resize: vertical;
+}
+
+.page textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.page textarea:focus {
+  border-color: var(--accent2);
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.2);
+}
+
+.page > button {
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.4rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.page > button:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}

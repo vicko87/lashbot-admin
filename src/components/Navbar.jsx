@@ -20,6 +20,7 @@ export default function Navbar() {
                 <Link to="/appointments">Citas</Link>
                 <Link to="/ai-settings">Configuración IA</Link>
                 <Link to="/services">Servicios</Link>
+                <Link to="/promotions">Promociones</Link>
                 <button onClick={logout}>Cerrar sesión</button>
             </div>
         </nav>

@@ -6,11 +6,40 @@ export default function Availability() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
 
-  useEffect(() => { loadSlots(); }, []);
+  // --- Vacaciones / festivos / bloqueos ---
+  const [holidays, setHolidays] = useState([]);
+  const [holidayDate, setHolidayDate] = useState('');
+  const [holidayReason, setHolidayReason] = useState('');
+
+  useEffect(() => {
+    loadSlots();
+    loadHolidays();
+  }, []);
 
   async function loadSlots() {
     const data = await apiFetch('/availability');
     setSlots(data);
+  }
+
+  async function loadHolidays() {
+    const data = await apiFetch('/holidays');
+    setHolidays(data);
+  }
+
+  async function addHoliday() {
+    if (!holidayDate) return;
+    await apiFetch('/holidays', {
+      method: 'POST',
+      body: JSON.stringify({ date: holidayDate, reason: holidayReason }),
+    });
+    loadHolidays();
+    setHolidayDate('');
+    setHolidayReason('');
+  }
+
+  async function deleteHoliday(id) {
+    await apiFetch(`/holidays/${id}`, { method: 'DELETE' });
+    loadHolidays();
   }
 
   async function addSlot() {
@@ -50,6 +79,23 @@ export default function Availability() {
           </div>
         </div>
       ))}
+
+      <h2>Vacaciones y días festivos</h2>
+      <div className="add-form">
+        <input type="date" value={holidayDate}
+          onChange={e => setHolidayDate(e.target.value)} />
+        <input type="text" placeholder="Motivo (ej: Navidad, vacaciones)"
+          value={holidayReason} onChange={e => setHolidayReason(e.target.value)} />
+        <button onClick={addHoliday}>Bloquear día</button>
+      </div>
+      <div className="slots">
+        {holidays.map(h => (
+          <span key={h.id} className="slot">
+            {h.date} {h.reason ? `— ${h.reason}` : ''}
+            <button onClick={() => deleteHoliday(h.id)}>✕</button>
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

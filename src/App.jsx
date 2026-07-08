@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Appointments from "./pages/Appointments";
 import AISettings from "./pages/AISettings";
 import Services from "./pages/Services";
+import Promotions from "./pages/Promotions";
 
 
 
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="/appointments" element={<PrivateRoute><Navbar /><Appointments /></PrivateRoute>} />
             <Route path="/ai-settings" element={<PrivateRoute><Navbar /><AISettings /></PrivateRoute>} />
              <Route path="/services" element={<PrivateRoute><Navbar /><Services /></PrivateRoute>} />
+             <Route path="/promotions" element={<PrivateRoute><Navbar /><Promotions /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );
