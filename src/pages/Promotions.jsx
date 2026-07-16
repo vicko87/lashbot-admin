@@ -75,29 +75,43 @@ export default function Promotions() {
         <input type="number" placeholder="Valor (ej: 20)" value={form.value}
           onChange={e => updateForm('value', e.target.value)} />
 
-        <input type="date" value={form.startDate}
-          onChange={e => updateForm('startDate', e.target.value)} />
-        <input type="date" value={form.endDate}
-          onChange={e => updateForm('endDate', e.target.value)} />
+        <label className="field">
+          <span>Desde</span>
+          <input type="date" value={form.startDate}
+            onChange={e => updateForm('startDate', e.target.value)} />
+        </label>
+        <label className="field">
+          <span>Hasta</span>
+          <input type="date" value={form.endDate}
+            onChange={e => updateForm('endDate', e.target.value)} />
+        </label>
 
         <button onClick={savePromotion}>
           {editingId ? 'Guardar cambios' : 'Crear promoción'}
         </button>
       </div>
 
-      <div className="service-list">
-        {promotions.map(p => (
-          <div key={p.id} className="service-card">
-            <strong>{p.name}</strong>
-            <span>{p.type} {p.value ? `· ${p.value}%` : ''}</span>
-            <p>{p.startDate} → {p.endDate}</p>
-            <div>
-              <button onClick={() => editPromotion(p)}>Editar</button>
-              <button onClick={() => deletePromotion(p.id)}>Borrar</button>
+      {promotions.length === 0 ? (
+        <div className="empty-state">
+          <span className="empty-icon">🎁</span>
+          <p>Todavía no tienes promociones.</p>
+          <small>Crea tu primera oferta con el formulario de arriba.</small>
+        </div>
+      ) : (
+        <div className="service-list">
+          {promotions.map(p => (
+            <div key={p.id} className="service-card">
+              <strong>{p.name}</strong>
+              <span>{p.type} {p.value ? `· ${p.value}%` : ''}</span>
+              <p>{p.startDate} → {p.endDate}</p>
+              <div>
+                <button onClick={() => editPromotion(p)}>Editar</button>
+                <button onClick={() => deletePromotion(p.id)}>Borrar</button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

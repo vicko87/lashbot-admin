@@ -23,6 +23,14 @@ export default function WhatsApp() {
             fetchStatus();
         }
 
+        async function stopBot() {
+            if (!window.confirm('¿Seguro que quieres desconectar el bot de WhatsApp?')) return;
+            setStatus('loading');
+            await apiFetch('/whatsapp/stop', { method: 'POST' });
+            setQr(null);
+            fetchStatus();
+        }
+
         useEffect(() => {
             async function load() {
                 try {
@@ -39,34 +47,62 @@ export default function WhatsApp() {
         }, []);
 
     useEffect(() => {
-        if (qr && canvasRef.current) {
-            QRCode.toCanvas(canvasRef.current, qr, { width: 256 });
+        if (status === 'qr' && qr && canvasRef.current) {
+            QRCode.toCanvas(canvasRef.current, qr, { width: 256 }, err => {
+                if (err) console.error('Error al dibujar el QR:', err);
+            });
         }
-    }, [qr]);
-             return (
-    <div style={{ padding: '2rem' }}>
-      <h2>WhatsApp Bot</h2>
+    }, [qr, status]);
+  // Traduce el estado técnico a un texto y color para la dueña
+  const STATUS_INFO = {
+    loading:      { label: 'Cargando…',            cls: 'muted' },
+    not_started:  { label: 'Sin iniciar',          cls: 'muted' },
+    disconnected: { label: 'Desconectado',         cls: 'danger' },
+    qr:           { label: 'Esperando escaneo',    cls: 'warn' },
+    initializing: { label: 'Iniciando…',           cls: 'warn' },
+    ready:        { label: 'Conectado',            cls: 'ok' },
+    error:        { label: 'Error de conexión',    cls: 'danger' },
+  };
+  const info = STATUS_INFO[status] || { label: status, cls: 'muted' };
 
-      <p>Estado: <strong>{status}</strong></p>
+  return (
+    <div className="page whatsapp">
+      <h1>WhatsApp Bot</h1>
 
-      {status === 'not_started' || status === 'disconnected' ? (
-        <button onClick={startBot}>Conectar WhatsApp</button>
-      ) : null}
-
-      {status === 'qr' && qr ? (
-        <div>
-          <p>Escanea este QR con tu WhatsApp:</p>
-          <canvas ref={canvasRef} />
+      <div className="wa-card">
+        <div className="wa-status">
+          <span className={`wa-dot ${info.cls}`} />
+          <span>Estado: <strong>{info.label}</strong></span>
         </div>
-      ) : null}
 
-      {status === 'ready' ? (
-        <p style={{ color: 'green' }}>✅ Bot conectado y funcionando</p>
-      ) : null}
+        {(status === 'not_started' || status === 'disconnected') && (
+          <button className="wa-connect" onClick={startBot}>
+            Conectar WhatsApp
+          </button>
+        )}
 
-      {status === 'initializing' ? (
-        <p>⏳ Iniciando...</p>
-      ) : null}
+        {status === 'qr' && qr && (
+          <div className="wa-qr">
+            <p>Escanea este código con tu WhatsApp:</p>
+            <canvas ref={canvasRef} />
+            <small>WhatsApp › Dispositivos vinculados › Vincular dispositivo</small>
+          </div>
+        )}
+
+        {status === 'initializing' && (
+          <p className="wa-hint">⏳ Iniciando el bot, espera unos segundos…</p>
+        )}
+
+        {status === 'ready' && (
+          <p className="wa-hint ok">✅ Bot conectado y funcionando</p>
+        )}
+
+        {(status === 'ready' || status === 'qr' || status === 'initializing') && (
+          <button className="wa-disconnect" onClick={stopBot}>
+            Desconectar WhatsApp
+          </button>
+        )}
+      </div>
     </div>
   );
 }
